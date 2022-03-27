@@ -31,13 +31,13 @@ function App() {
                 value={title}
                 onChange={e => setTitle(e.target.value)}
             />
-            <input type="text" ref={bodyInputRef}/>
-{/*            <MyInput
+            {/*Not controlled component*/}
+            <MyInput
                 type="text"
                 placeholder="Post description"
                 ref={bodyInputRef}
 
-            />*/}
+            />
             <MyButton onClick={AddNewPost}>Add Post</MyButton>
         </form>
         <PostList posts={posts} title="JavaScript Posts"/>
