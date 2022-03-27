@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
@@ -8,22 +8,24 @@ import MyInput from "./components/UI/input/MyInput";
 function App() {
 
     const [posts, setPosts] = useState([
-        {id:1, title: "JavaScript 1", body: 'Description 1'},
-        {id:2, title: "JavaScript 2", body: 'Description 2'},
-        {id:3, title: "JavaScript 3", body: 'Description 3'},
+        {id:1, title: "Aaron", body: 'Whatson'},
+        {id:2, title: "Billy", body: 'Decathlon'},
+        {id:3, title: "Jimmy", body: 'Billy Ilish'},
     ])
 
-    const [sortedPosts, setSortedPosts] = useState('')
+    const [selectedSort, setSelectedSort] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
 
-    function getSortedPosts() {
-        if (sortedPosts){
-            return [...posts].sort((a,b) => a[sortedPosts].localeCompare(b[sortedPosts]))
+    const sortedPosts = useMemo(() => {
+        if (selectedSort){
+            return [...posts].sort((a,b) => a[selectedSort].localeCompare(b[selectedSort]))
         }
         return posts
-    }
+    },[selectedSort,posts])
 
-    const sortedPostsList = getSortedPosts()
+    const sortedAndSearchedPosts = useMemo(() => {
+        return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery))
+    },[searchQuery, sortedPosts])
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
@@ -34,7 +36,7 @@ function App() {
     }
 
     const sortPosts = (sort) => {
-        setSortedPosts(sort);
+        setSelectedSort(sort);
     }
 
   return (
@@ -47,7 +49,7 @@ function App() {
             onChange={event => setSearchQuery(event.target.value)}
         />
         <MySelect
-            value={sortedPosts}
+            value={selectedSort}
             onChange={sortPosts}
             options={[
                 {value:'title',name:'Sort by name'},
@@ -55,9 +57,9 @@ function App() {
             ]}
             defaultValue="Sort"
         />
-        {posts.length
+        {sortedAndSearchedPosts.length
             ?
-            <PostList posts={sortedPostsList} remove={removePost} title="JavaScript Posts"/>
+            <PostList posts={sortedAndSearchedPosts} remove={removePost} title="JavaScript Posts"/>
             :
             <h1 style={{textAlign:'center', marginTop:'50px', color: 'red'}}>No records found</h1>
         }
