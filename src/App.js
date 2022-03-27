@@ -12,19 +12,23 @@ function App() {
         {id:3, title: "JavaScript 3", body: 'Description 3'},
     ])
 
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
+    const [post, setPost] = useState({
+        title:'',
+        body: ''
+    })
 
     const AddNewPost = (e) => {
         e.preventDefault();
         const newPost = {
             id: Date.now(),
-            title,
-            body
+            title: post.title,
+            body: post.body
         }
         setPosts([...posts, newPost])
-        setTitle('')
-        setBody('')
+        setPost({
+            title:'',
+            body: ''
+        })
     }
 
   return (
@@ -34,15 +38,15 @@ function App() {
             <MyInput
                 type="text"
                 placeholder="Post name"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
+                value={post.title}
+                onChange={e => setPost({title: e.target.value, body: post.body})}
             />
             {/*Not controlled component*/}
             <MyInput
                 type="text"
                 placeholder="Post description"
-                value={body}
-                onChange={e => setBody(e.target.value)}
+                value={post.body}
+                onChange={e => setPost({title: post.title, body: e.target.value})}
             />
             <MyButton onClick={AddNewPost}>Add Post</MyButton>
         </form>
