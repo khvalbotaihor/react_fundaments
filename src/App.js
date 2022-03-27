@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
+import MySelect from "./components/UI/select/MySelect";
 
 function App() {
 
@@ -22,6 +23,14 @@ function App() {
   return (
     <div className="App">
         <PostForm create={createPost}/>
+        <hr style={{margin:'15px 0'}}/>
+        <MySelect
+            options={[
+                {value:'title',name:'Sort by name'},
+                {value:'body',name:'Sort by description'},
+            ]}
+            defaultValue="Sort"
+        />
         {posts.length
             ?
             <PostList posts={posts} remove={removePost} title="JavaScript Posts"/>
