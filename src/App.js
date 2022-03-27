@@ -3,6 +3,7 @@ import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 
 function App() {
 
@@ -13,6 +14,16 @@ function App() {
     ])
 
     const [sortedPosts, setSortedPosts] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+
+    function getSortedPosts() {
+        if (sortedPosts){
+            return [...posts].sort((a,b) => a[sortedPosts].localeCompare(b[sortedPosts]))
+        }
+        return posts
+    }
+
+    const sortedPostsList = getSortedPosts()
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
@@ -24,13 +35,17 @@ function App() {
 
     const sortPosts = (sort) => {
         setSortedPosts(sort);
-        setPosts( [...posts].sort((a,b) => a[sort].localeCompare(b[sort])))
     }
 
   return (
     <div className="App">
         <PostForm create={createPost}/>
         <hr style={{margin:'15px 0'}}/>
+        <MyInput
+            placeholder="Search"
+            value={searchQuery}
+            onChange={event => setSearchQuery(event.target.value)}
+        />
         <MySelect
             value={sortedPosts}
             onChange={sortPosts}
@@ -42,7 +57,7 @@ function App() {
         />
         {posts.length
             ?
-            <PostList posts={posts} remove={removePost} title="JavaScript Posts"/>
+            <PostList posts={sortedPostsList} remove={removePost} title="JavaScript Posts"/>
             :
             <h1 style={{textAlign:'center', marginTop:'50px', color: 'red'}}>No records found</h1>
         }
