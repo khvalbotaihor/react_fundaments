@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
         <PostForm create={createPost}/>
-        {posts.length !== 0
+        {posts.length
             ?
             <PostList posts={posts} remove={removePost} title="JavaScript Posts"/>
             :
