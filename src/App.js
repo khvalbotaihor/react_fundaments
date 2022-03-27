@@ -12,6 +12,8 @@ function App() {
         {id:3, title: "JavaScript 3", body: 'Description 3'},
     ])
 
+    const [sortedPosts, setSortedPosts] = useState('')
+
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
     }
@@ -20,11 +22,18 @@ function App() {
         setPosts(posts.filter(el => el.id !== post.id))
     }
 
+    const sortPosts = (sort) => {
+        setSortedPosts(sort);
+        setPosts( [...posts].sort((a,b) => a[sort].localeCompare(b[sort])))
+    }
+
   return (
     <div className="App">
         <PostForm create={createPost}/>
         <hr style={{margin:'15px 0'}}/>
         <MySelect
+            value={sortedPosts}
+            onChange={sortPosts}
             options={[
                 {value:'title',name:'Sort by name'},
                 {value:'body',name:'Sort by description'},
