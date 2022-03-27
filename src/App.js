@@ -22,7 +22,12 @@ function App() {
   return (
     <div className="App">
         <PostForm create={createPost}/>
-        <PostList posts={posts} remove={removePost} title="JavaScript Posts"/>
+        {posts.length !== 0
+            ?
+            <PostList posts={posts} remove={removePost} title="JavaScript Posts"/>
+            :
+            <h1 style={{textAlign:'center', marginTop:'50px', color: 'red'}}>No records found</h1>
+        }
     </div>
   );
 }
