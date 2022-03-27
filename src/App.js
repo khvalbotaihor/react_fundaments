@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import './styles/App.css'
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
@@ -13,12 +13,16 @@ function App() {
     ])
 
     const [title, setTitle] = useState('')
-    const bodyInputRef = useRef()
+    const [body, setBody] = useState('')
 
     const AddNewPost = (e) => {
         e.preventDefault();
-        console.log(title)
-        console.log(bodyInputRef.current.value)
+        const newPost = {
+            id: Date.now(),
+            title,
+            body
+        }
+        setPosts([...posts, newPost])
     }
 
   return (
@@ -35,8 +39,8 @@ function App() {
             <MyInput
                 type="text"
                 placeholder="Post description"
-                ref={bodyInputRef}
-
+                value={body}
+                onChange={e => setBody(e.target.value)}
             />
             <MyButton onClick={AddNewPost}>Add Post</MyButton>
         </form>
