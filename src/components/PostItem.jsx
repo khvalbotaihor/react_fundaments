@@ -2,11 +2,6 @@ import React from 'react';
 import MyButton from "./UI/button/MyButton";
 
 const PostItem = (props) => {
-
-    const deletePost = () => {
-        props.delete()
-    }
-
     return (
         <div className="post">
             <div className="post__content">
