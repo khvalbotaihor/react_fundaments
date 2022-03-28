@@ -48,6 +48,9 @@ function App() {
             filter={filter}
             setFilter={setFilter}
         />
+        {postError &&
+            <h1>Error happens: ${postError}</h1>
+        }
         {isPostLoading
         ? <div style={{display:'flex', justifyContent:'center', marginTop:'50px'}}><Loader /></div>
         : <PostList posts={sortedAndSearchedPosts} remove={removePost} title="JavaScript Posts"/>
