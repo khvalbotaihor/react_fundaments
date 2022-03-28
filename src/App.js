@@ -9,12 +9,7 @@ import {usePosts} from "./hooks/usePost";
 
 function App() {
 
-    const [posts, setPosts] = useState([
-        {id:1, title: "Aaron", body: 'Whatson'},
-        {id:2, title: "Billy", body: 'Decathlon'},
-        {id:3, title: "Jimmy", body: 'Billy Ilish'},
-    ])
-
+    const [posts, setPosts] = useState([])
     const [filter, setFilter] = useState({sort: '', query: ''})
     const [modal, setModal] = useState(false)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
