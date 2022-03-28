@@ -7,6 +7,7 @@ import MyModal from "./components/UI/MyModal/MyModal";
 import MyButton from "./components/UI/button/MyButton";
 import {usePosts} from "./hooks/usePost";
 import PostService from "./API/PostService";
+import Loader from "./components/UI/Loader/Loader";
 
 function App() {
 
@@ -53,7 +54,7 @@ function App() {
             setFilter={setFilter}
         />
         {isPostLoading
-        ? <h1>Posts are loading....</h1>
+        ? <div style={{display:'flex', justifyContent:'center', marginTop:'50px'}}><Loader /></div>
         : <PostList posts={sortedAndSearchedPosts} remove={removePost} title="JavaScript Posts"/>
         }
     </div>
