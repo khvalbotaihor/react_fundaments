@@ -66,6 +66,7 @@ function Posts() {
                 filter={filter}
                 setFilter={setFilter}
             />
+
             <MySelect
                 value={limit}
                 onChange={value => setLimit(value)}
