@@ -6,6 +6,7 @@ import Posts from "./pages/Posts";
 function App() {
     return (
             <BrowserRouter>
+                <div></div>
             <Route path="/about">
                 <About />
             </Route>
