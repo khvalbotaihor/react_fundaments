@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import '../styles/App.css'
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/MyModal/MyModal";
@@ -21,17 +21,26 @@ function Posts() {
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(1)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
+    const lastElement = useRef()
+    const observer = useRef()
 
     const [fetchPosts, isPostLoading, postError] = useFetching(async (limit, page) => {
         const response = await PostService.getAll(limit, page);
-        setPosts(response.data)
+        setPosts([...posts, ...response.data])
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPagesCount(totalCount, limit))
     })
 
     useEffect(() => {
-        fetchPosts(limit, page);
+        var callback = function(entries, observer) {
+            /* Content excerpted, show below */
+        };
+        observer = new IntersectionObserver(callback);
     },[])
+
+    useEffect(() => {
+        fetchPosts(limit, page);
+    },[page])
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
@@ -44,7 +53,6 @@ function Posts() {
 
     const changePage = (page) => {
         setPage(page)
-        fetchPosts(limit, page);
     }
 
     return (
@@ -64,9 +72,10 @@ function Posts() {
             {postError &&
                 <h1>Error happens: ${postError}</h1>
             }
-            {isPostLoading
-                ? <div style={{display:'flex', justifyContent:'center', marginTop:'50px'}}><Loader /></div>
-                : <PostList posts={sortedAndSearchedPosts} remove={removePost} title="JavaScript Posts"/>
+            <PostList posts={sortedAndSearchedPosts} remove={removePost} title="JavaScript Posts"/>
+            <div ref={lastElement} style={{height: 20, background: 'red'}}/>
+            {isPostLoading &&
+                <div style={{display:'flex', justifyContent:'center', marginTop:'50px'}}><Loader /></div>
             }
             <Pagination changePage={changePage} page={page} totalPages={totalPages}/>
         </div>
