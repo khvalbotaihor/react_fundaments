@@ -32,11 +32,17 @@ function Posts() {
     })
 
     useEffect(() => {
+        if (isPostLoading) return;
+        if (observer.current) observer.current.disconnect();
         var callback = function(entries, observer) {
-            /* Content excerpted, show below */
+            if (entries[0].isIntersecting && page < totalPages){
+                console.log(page)
+                setPage(page + 1)
+            }
         };
-        observer = new IntersectionObserver(callback);
-    },[])
+        observer.current = new IntersectionObserver(callback);
+        observer.current.observe(lastElement.current)
+    },[isPostLoading])
 
     useEffect(() => {
         fetchPosts(limit, page);
