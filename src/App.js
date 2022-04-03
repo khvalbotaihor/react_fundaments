@@ -1,24 +1,27 @@
 import React from "react";
-import {Route, BrowserRouter} from "react-router-dom";
+import {Route, BrowserRouter, Link, Switch, Redirect} from "react-router-dom";
 import About from "./pages/About";
 import Posts from "./pages/Posts";
+import Navbar from "./components/UI/Navbar/Navbar";
+import Error from "./pages/Error";
 
 function App() {
     return (
-            <BrowserRouter>
-                <div className="navbar">
-                    <div className="navbar__links">
-                        <a href="/about">About page</a>
-                        <a href="/posts">Posts</a>
-                    </div>
-                </div>
-            <Route path="/about">
-                <About />
-            </Route>
-            <Route path="/posts">
-                <Posts />
-            </Route>
-            </BrowserRouter>
+      <BrowserRouter>
+            <Navbar />
+            <Switch>
+              <Route path="/about">
+                  <About />
+              </Route>
+              <Route path="/posts">
+                  <Posts />
+              </Route>
+              <Route path="/error">
+                  <Error />
+              </Route>
+                <Redirect to="/error" />
+            </Switch>
+      </BrowserRouter>
     )
 }
 
