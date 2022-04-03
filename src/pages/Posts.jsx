@@ -52,7 +52,6 @@ function Posts() {
     const changePage = (page) => {
         setPage(page)
     }
-
     return (
         <div className="App">
             <MyButton onClick={fetchPosts}>Get Posts</MyButton>
