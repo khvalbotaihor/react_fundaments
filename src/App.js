@@ -6,7 +6,12 @@ import Posts from "./pages/Posts";
 function App() {
     return (
             <BrowserRouter>
-                <div></div>
+                <div className="navbar">
+                    <div className="navbar__links">
+                        <a href="/about">About page</a>
+                        <a href="/posts">Posts</a>
+                    </div>
+                </div>
             <Route path="/about">
                 <About />
             </Route>
